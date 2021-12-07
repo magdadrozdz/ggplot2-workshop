@@ -1,0 +1,62 @@
+---
+title: "R Notebook"
+---
+
+1. Load in the tidyverse package 
+```{r}
+library(tidyverse)
+```
+
+2. Load and view the mtcars data
+
+```{r}
+cars <- mtcars
+cars$model <- rownames(cars)
+
+cars
+```
+
+Variable descriptions: 
+mpg: Miles/(US) gallon
+cyl: Number of cylinders
+disp: Displacement (cu.in.)
+hp: Gross horsepower
+drat: Rear axle ratio
+wt: Weight (1000 lbs)
+qsec: 1/4 mile time
+vs: V/S
+am: Transmission (0 = automatic, 1 = manual)
+gear: Number of forward gears
+carb: Number of carburetors
+
+3. Plot weight (wt) against miles per gallon (mpg)
+```{r}
+
+```
+
+4. Colour the dots according to displacement (disp) value
+```{r}
+
+```
+
+What is the car with the highest weight and miles per gallon? Let's try to add some labels. 
+
+Note:
+Most of the time, all the data for a given plot are contained in one table. This means that the mapping can be done in the main plotting call `ggplot()` and does not have to go into layers. 
+
+```{r}
+
+```
+
+The labels are probably overlapping, how can we see what's the highest? 
+```{r}
+
+```
+
+Add labels and title to the plot
+
+```{r}
+
+```
+
+

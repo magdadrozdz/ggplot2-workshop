@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+---
+
+Tutorial credits: https://www.biostars.org/p/458364/
+
+```{r}
+library(tidyverse)
+```
+
+Let's create a sample table. Many biological results can be in this format:
+```{r}
+mat <- cbind(
+  t(replicate(4, rnorm(3, runif(1, 10, 500), runif(1, 1, 25)))),
+  t(replicate(4, rnorm(3, runif(1, 10, 500), runif(1, 1, 25)))))
+
+dimnames(mat) <- list(
+  sprintf("ENS%06d", seq(100, 103)),
+  c(sprintf("EV_%02d", seq_len(3)), sprintf("KD_%02d", seq_len(3))))
+
+df <- as_tibble(mat, rownames="genes")
+df
+```
+
+Unfortunately, ggplot does not handle data in "wide" format well. It is simply impossible to map values to plot components. We have to transform it into a "long" format, where every row is a separate observation. 
+
+```{r}
+df <- pivot_longer(df, -genes, names_to = "sample", values_to = "expression")
+df
+```
+
+This looks better! But we still have multiple replicates per sample, so we could separate these into two columns. 
+
+```{r}
+df <- separate(df, sample, into=c("sample", "replicate"), sep="_")
+df
+```
+
+Amazing, ggplot loves this! Now we are ready to plot the data.
+
+```{r}
+ggplot(df, 
+       aes(x = genes, 
+           y = log2(expression), 
+           fill = sample)) +
+  geom_boxplot()
+```
+
+Sometimes the bottom labels may be overlapping. This can be fixed in two ways: 
+1. Rotating the labels 
+2. Rotating the entire table
+
+```{r}
+ggplot(df, 
+       aes(x = genes, 
+           y = log2(expression), 
+           fill = sample)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(df, 
+       aes(x = genes, 
+           y = log2(expression), 
+           fill = sample)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+For aesthetic reasons, we may want to change the background. That's where themes come in handy! 
+
+```{r}
+ggplot(df, 
+       aes(x = genes, 
+           y = log2(expression), 
+           fill = sample)) +
+  geom_boxplot() +
+  theme_minimal()
+
+ggplot(df, 
+       aes(x = genes, 
+           y = log2(expression), 
+           fill = sample)) +
+  geom_boxplot() +
+  theme_dark()
+```
+

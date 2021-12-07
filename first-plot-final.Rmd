@@ -1,0 +1,98 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+---
+title: "first_plot"
+author: "magda"
+date: "07/12/2021"
+---
+
+```{r}
+library(tidyverse)
+```
+Show the first rows of the iris dataset
+```{r}
+head(iris)
+```
+
+What is the relation of sepal length and width ? 
+```{r}
+ggplot(data = iris)
+
+# ggplot is ready to plot, but it does not know what do do with the data
+```
+
+```{r}
+ggplot(data = iris) + 
+  geom_point()
+
+# this throws an error, because we did not map the data to plot elements
+```
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width)) +
+  geom_point()
+```
+
+Do we see differences between species?
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point()
+```
+
+There are a lot of visual elements which can be modified now, such as size:
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point(size = 3)
+```
+Or shape:
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point(shape = 3)
+```
+
+Note that any modifications put outside of mapping with apply to all elements. If we want to distinguish between different species, the shape has to be mapped to 'Species' column like the colour.
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species,
+                     shape = Species)) +
+  geom_point()
+```
+
+Let's try a different visualisation now. What's the difference in sepal length between the species? 
+Time for cheatsheets!
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Species,
+                     y = Sepal.Length,
+                     colour = Species)) +
+  geom_boxplot()
+```
+
+For boxplots, barplots etc. `fill =` is a better option than `colour =`, as the latter only applies to points and lines. 
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Species,
+                     y = Sepal.Length,
+                     fill = Species)) +
+  geom_boxplot()
+```
+

@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+1. Load tidyverse 
+```{r}
+library(tidyverse)
+```
+
+2. Get and look at the tooth growth dataset
+
+len: Tooth length
+supp: Supplement type (VC or OJ).
+dose: numeric Dose in milligrams/day
+
+```{r}
+tooth_growth <- ToothGrowth
+View(tooth_growth)
+```
+
+3. Compare tooth growth between VC and OJ, not taking the dose into account
+
+```{r}
+
+
+```
+
+Now, let's compare across different doses. 
+
+```{r}
+
+```
+
+
+

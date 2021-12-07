@@ -1,0 +1,95 @@
+---
+title: "R Notebook"
+---
+
+1. Load in the tidyverse package 
+```{r}
+library(tidyverse)
+```
+
+2. Load and view the mtcars data
+
+```{r}
+cars <- mtcars
+cars$model <- rownames(cars)
+
+cars
+```
+
+Variable descriptions: 
+mpg: Miles/(US) gallon
+cyl: Number of cylinders
+disp: Displacement (cu.in.)
+hp: Gross horsepower
+drat: Rear axle ratio
+wt: Weight (1000 lbs)
+qsec: 1/4 mile time
+vs: V/S
+am: Transmission (0 = automatic, 1 = manual)
+gear: Number of forward gears
+carb: Number of carburetors
+
+3. Plot weight (wt) against miles per gallon (mpg)
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg)) + 
+  geom_point()
+```
+
+4. Colour the dots according to displacement (disp) value
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point()
+```
+
+What is the car with the highest weight and miles per gallon? Let's try to add some labels. 
+
+Note:
+Most of the time, all the data for a given plot are contained in one table. This means that the mapping can be done in the main plotting call `ggplot()` and does not have to go into layers. 
+
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(mapping = aes(label = model))
+```
+
+The labels are probably overlapping, how can we see what's the highest? 
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(data = cars %>% filter(wt == max(wt)),
+            mapping = aes(label = model),
+            nudge_y = 1,
+            nudge_x = -0.3)
+```
+
+Add labels and title to the plot
+
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(data = cars %>% filter(wt == max(wt)),
+            mapping = aes(label = model),
+            nudge_y = 1,
+            nudge_x = -0.3) + 
+  labs(x = "weight",
+       y = "miles per gallon",
+       title = "Weight vs. miles per gallon in mtcars dataset")
+```
+
+
+
+
