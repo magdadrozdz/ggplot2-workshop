@@ -1,0 +1,186 @@
+---
+title: "R Notebook"
+---
+
+First, load the tidyverse package which includes a buch of useful packages including ggplot2. 
+```{r}
+library(tidyverse)
+```
+
+Now look at the first few rows of the inbuilt `iris` dataset
+```{r}
+head(iris)
+```
+
+Let's plot our first plot - what is the relation between sepal length and width?
+```{r}
+ggplot(data = iris)
+
+# ggplot is ready to plot, but it does not know what do do with the data
+```
+
+```{r eval = FALSE}
+ggplot(data = iris) + 
+  geom_point()
+
+# this throws an error, because we did not map the data to plot elements
+```
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width)) +
+  geom_point()
+```
+
+Colour the points by species, to see if there are differences.
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point()
+```
+
+There are a lot of visual elements which can be modified now, such as size:
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point(size = 3)
+```
+
+Or shape:
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species)) +
+  geom_point(shape = 3)
+```
+
+Note that any modifications put outside of mapping with apply to all elements. If we want to distinguish between different species, the shape has to be mapped to 'Species' column like the colour.
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Sepal.Length, 
+                     y = Sepal.Width, 
+                     colour = Species,
+                     shape = Species)) +
+  geom_point()
+```
+
+Let's try a different visualisation now. What is the difference in sepal length between the species? Think of what sort of plot would work best for this. Time for cheatsheets!
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Species,
+                     y = Sepal.Length,
+                     colour = Species)) +
+  geom_boxplot()
+```
+
+Note how the `colour = ` option does not behave as we may want it to. Try replacing it with `fill =`. 
+
+```{r}
+ggplot(data = iris, 
+       mapping = aes(x = Species,
+                     y = Sepal.Length,
+                     fill = Species)) +
+  geom_boxplot()
+```
+
+`colour` controls points and lines, while `fill =`, well, fills the shapes :) 
+
+---
+PART B: cars
+---
+
+Load and view the mtcars data
+
+```{r}
+cars <- mtcars
+cars$model <- rownames(cars)
+
+cars
+```
+
+Variable descriptions: 
+mpg: Miles/(US) gallon
+cyl: Number of cylinders
+disp: Displacement (cu.in.)
+hp: Gross horsepower
+drat: Rear axle ratio
+wt: Weight (1000 lbs)
+qsec: 1/4 mile time
+vs: V/S
+am: Transmission (0 = automatic, 1 = manual)
+gear: Number of forward gears
+carb: Number of carburetors
+
+
+Plot weight (wt) against miles per gallon (mpg)
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg)) + 
+  geom_point()
+```
+
+Colour the dots according to displacement (disp) value
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point()
+```
+
+What is the car with the highest weight and miles per gallon? Let's try to add some labels. 
+
+Note:
+Most of the time, all the data for a given plot are contained in one table. This means that the mapping can be done in the main plotting call `ggplot()` and does not have to go into layers. 
+
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(mapping = aes(label = model))
+```
+
+The labels can often end up overlapping. Let's try to nudge them so we can see them better.
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(data = cars %>% filter(wt == max(wt)),
+            mapping = aes(label = model),
+            nudge_y = 1,
+            nudge_x = -0.3)
+```
+(In this example we are using some custom values, you may want to play with them or look up the ggrepel() function)
+
+Add labels, title and a subtitle to the plot using `labs()` 
+```{r}
+ggplot(data = cars,
+       mapping = aes(x = wt,
+                     y = mpg,
+                     colour = disp)) + 
+  geom_point() + 
+  geom_text(data = cars %>% filter(wt == max(wt)),
+            mapping = aes(label = model),
+            nudge_y = 1,
+            nudge_x = -0.3) + 
+  labs(x = "weight",
+       y = "miles per gallon",
+       title = "Weight vs. miles per gallon in mtcars dataset")
+```
+
+
+
+

@@ -1,0 +1,122 @@
+---
+title: "ggplot2 workshop"
+author: "magda"
+date: "07/12/2021"
+---
+
+---- 
+# PART A - the first plot
+---- 
+
+First, load the tidyverse package which includes a buch of useful packages including ggplot2. 
+```{r}
+
+```
+
+Now look at the first few rows of the inbuilt `iris` dataset
+```{r}
+
+```
+
+Let's plot our first plot - what is the relation between sepal length and width? Time to use ggplot()!
+```{r}
+
+```
+
+Colour the points by species, to see if there are differences.
+```{r}
+
+```
+
+There are a lot of visual elements which can be modified now, such as size:
+```{r}
+
+```
+
+Or shape:
+```{r}
+
+```
+
+Note that any modifications put outside of mapping with apply to all elements. If we want to distinguish between different species, the shape has to be mapped to 'Species' column like the colour.
+
+```{r}
+
+```
+
+Let's try a different visualisation now. What is the difference in sepal length between the species? Think of what sort of plot would work best for this. Time for cheatsheets!
+
+```{r}
+
+```
+
+Note how the `colour = ` option does not behave as we may want it to. Try replacing it with `fill =`. 
+
+```{r}
+
+```
+
+`colour` controls points and lines, while `fill =`, well, fills the shapes :) 
+
+
+---- 
+# PART B - cars
+---- 
+
+1. Load and view the mtcars data
+
+```{r}
+cars <- mtcars
+cars$model <- rownames(cars)
+
+cars
+```
+
+Variable descriptions: 
+mpg: Miles/(US) gallon
+cyl: Number of cylinders
+disp: Displacement (cu.in.)
+hp: Gross horsepower
+drat: Rear axle ratio
+wt: Weight (1000 lbs)
+qsec: 1/4 mile time
+vs: V/S
+am: Transmission (0 = automatic, 1 = manual)
+gear: Number of forward gears
+carb: Number of carburetors
+
+Plot weight (wt) against miles per gallon (mpg)
+```{r}
+
+```
+
+Colour the dots according to displacement (disp) value
+```{r}
+
+```
+
+What is the car with the highest weight and miles per gallon? Let's try to add some labels. 
+
+Note:
+Most of the time, all the data for a given plot are contained in one table. This means that the mapping can be done in the main plotting call `ggplot()` and does not have to go into layers. 
+
+```{r}
+
+```
+
+The labels can often end up overlapping. Let's try to nudge them so we can see them better.
+```{r}
+
+```
+(In this example we are using some custom values, you may want to play with them or look up the ggrepel() function)
+
+
+Add labels, title and a subtitle to the plot using `labs()` 
+```{r}
+
+```
+
+
+
+
+
