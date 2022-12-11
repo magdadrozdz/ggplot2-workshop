@@ -182,5 +182,50 @@ ggplot(data = cars,
 ```
 
 
+---
+PART 3
+---
+
+```{r}
+tooth_growth <- ToothGrowth
+#View(tooth_growth)
+```
+
+len: Tooth length
+supp: Supplement type (VC or OJ).
+dose: numeric Dose in milligrams/day
+
+
+Compare tooth growth between VC and OJ, not taking the dose into account
+```{r}
+ggplot(ToothGrowth,
+       aes(x = supp, y = len, fill = supp)) + 
+  geom_boxplot()
+```
+
+Now, let's compare across different doses. 
+```{r}
+ggplot(ToothGrowth,
+       aes(x = supp, y = len, fill = supp)) + 
+  geom_boxplot() + 
+  facet_wrap(~dose)
+```
+
+
+For aesthetic reasons, we may want to change the background. That's where themes come in handy! 
+
+```{r}
+ggplot(ToothGrowth,
+       aes(x = supp, y = len, fill = supp)) + 
+  geom_boxplot() + 
+  facet_wrap(~dose) +
+  theme_minimal()
+
+ggplot(ToothGrowth,
+       aes(x = supp, y = len, fill = supp)) + 
+  geom_boxplot() + 
+  facet_wrap(~dose) +
+  theme_dark()
+```
 
 

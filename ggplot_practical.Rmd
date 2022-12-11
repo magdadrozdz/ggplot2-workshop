@@ -1,7 +1,7 @@
 ---
 title: "ggplot2 workshop"
 author: "magda"
-date: "07/12/2021"
+date: "12/12/202"
 ---
 
 ---- 
@@ -60,7 +60,7 @@ Note how the `colour = ` option does not behave as we may want it to. Try replac
 
 
 ---- 
-# PART B - cars
+# PART B - labels
 ---- 
 
 1. Load and view the mtcars data
@@ -112,6 +112,34 @@ The labels can often end up overlapping. Let's try to nudge them so we can see t
 
 
 Add labels, title and a subtitle to the plot using `labs()` 
+```{r}
+
+```
+
+---
+PART 3 - faceting
+---
+
+```{r}
+head(ToothGrowth)
+```
+len: Tooth length
+supp: Supplement type (VC or OJ).
+dose: numeric Dose in milligrams/day
+
+Compare tooth growth between VC and OJ, not taking the dose into account
+```{r}
+
+
+```
+
+Now, let's compare across different doses. 
+```{r}
+
+```
+
+
+For aesthetic reasons, we may want to change the background. That's where themes come in handy! 
 ```{r}
 
 ```

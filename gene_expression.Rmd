@@ -65,22 +65,3 @@ ggplot(df,
   geom_boxplot() +
   coord_flip()
 ```
-
-For aesthetic reasons, we may want to change the background. That's where themes come in handy! 
-
-```{r}
-ggplot(df, 
-       aes(x = genes, 
-           y = log2(expression), 
-           fill = sample)) +
-  geom_boxplot() +
-  theme_minimal()
-
-ggplot(df, 
-       aes(x = genes, 
-           y = log2(expression), 
-           fill = sample)) +
-  geom_boxplot() +
-  theme_dark()
-```
-
